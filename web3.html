@@ -22,7 +22,7 @@
     
     console.log("connecting to",web3.currentProvider)
     web3.version.getNetwork((e,r)=>console.log("network, err=",e,"res=",r))
-    web3.version.getProtocol((e,r)=>console.log("protocol, err=",e,"res=",r))
+    web3.version.protocol((e,r)=>console.log("protocol, err=",e,"res=",r))
     console.log("etherbase is",web3.eth.coinbase)
     </script>
   </body>
