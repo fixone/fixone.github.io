@@ -14,16 +14,50 @@
   <body>
 
     <header>
-      <div class="container">
-      
+      <div class="container" style="padding:20px" id="#container">
       </div>
     </header>
     <script>
-    
-    console.log("connecting to",web3.currentProvider)
-    web3.version.getNetwork((e,r)=>console.log("network, err=",e,"res=",r))
-    web3.version.protocol((e,r)=>console.log("protocol, err=",e,"res=",r))
-    console.log("etherbase is",web3.eth.coinbase)
+        var appendText = (id,text) => {
+                var el = document.getElementById(id)
+                if(el!=null){
+                        el.innerHTML += ("<br/>"+text)
+                }
+        }
+        var address = "0x3de654b603addf6255a1d88647f703210e389ee6"
+        appendText('#container',"Address is: "+address)
+
+        console.log("connecting to",web3.currentProvider)
+        web3.version.getNetwork((e,r)=>appendText('#container',"Network is: "+r))
+        web3.version.getEthereum((e,r)=>appendText("#container","Protocol is: "+r))
+        try {
+                console.log("etherbase is",web3.eth.coinbase)
+        } catch (e) {
+                console.log("error",e)
+        }
+        web3.eth.getBlockNumber((e,r)=>appendText("#container","Block number is: "+r))
+        web3.eth.getTransactionCount(address,(e,r)=> {
+                if(e) {
+                        console.log("error gtc",e)
+                } else {
+                        appendText("#container","Transactions from address: "+r)
+                }
+        })
+        web3.eth.getBlock('latest',(e,r)=>{
+                if(e) {
+                        console.log(e)
+                } else {
+                        appendText("#container","Latest Block Hash: "+r.hash)
+                        if(r.transactions.length>0){
+                                appendText("#container","With "+r.transactions.length+" transactions")
+                                r.transactions.forEach((tx)=>{
+                                        appendText("#container",tx)
+                                })
+                        } else {
+                                appendText("#container","With no transactions")
+                        }
+                }
+        })
     </script>
   </body>
 </html>
