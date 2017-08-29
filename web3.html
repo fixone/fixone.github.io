@@ -19,6 +19,7 @@
       </div>
     </header>
     <script>
+    web3.currentProvider.then((x)=>console.log(x))
     console.log("connecting to",web3.currentProvider)
     console.log("this node is connected to a network with id",web3.version.network)
     console.log("and eth protocol version", web3.version.ethereum,"i.e.",parseInt(web3.version.ethereum))
